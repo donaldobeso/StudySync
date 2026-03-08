@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="StudySync.Shared/StudySync.Shared.csproj" />
+  <Project Path="StudySync/StudySync.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>

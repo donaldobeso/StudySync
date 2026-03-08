@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StudySync.MainPage"
+             Title="StudySync">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <!-- Header -->
+            <Label Text="📚 StudySync"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#4A90D9"/>
+
+            <Label Text="Add New Assignment"
+                   FontSize="18"
+                   HorizontalOptions="Center"
+                   TextColor="#666"/>
+
+            <!-- Input: Assignment Title -->
+            <Label Text="Assignment Title" FontAttributes="Bold"/>
+            <Entry x:Name="TitleEntry"
+                   Placeholder="e.g., Math Homework Chapter 5"
+                   BackgroundColor="#F0F4FF"/>
+
+            <!-- Input: Subject Picker -->
+            <Label Text="Subject" FontAttributes="Bold"/>
+            <Picker x:Name="SubjectPicker" Title="Select Subject"
+                    BackgroundColor="#F0F4FF">
+                <Picker.Items>
+                    <x:String>Mathematics</x:String>
+                    <x:String>Science</x:String>
+                    <x:String>English</x:String>
+                    <x:String>History</x:String>
+                    <x:String>Programming</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Input: Priority -->
+            <Label Text="Priority" FontAttributes="Bold"/>
+            <Picker x:Name="PriorityPicker" Title="Select Priority"
+                    BackgroundColor="#F0F4FF">
+                <Picker.Items>
+                    <x:String>Low</x:String>
+                    <x:String>Medium</x:String>
+                    <x:String>High</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Toggle: Mark as Done -->
+            <HorizontalStackLayout Spacing="12">
+                <Label Text="Mark as Completed" VerticalOptions="Center"/>
+                <Switch x:Name="CompletedSwitch"/>
+            </HorizontalStackLayout>
+
+            <!-- Button: Save -->
+            <Button Text="Save Assignment"
+                    BackgroundColor="#4A90D9"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Clicked="OnSaveClicked"/>
+
+            <!-- Output Label -->
+            <Label x:Name="ResultLabel"
+                   Text=""
+                   FontSize="14"
+                   TextColor="#2E7D32"
+                   HorizontalOptions="Center"/>
+
+            <!-- Divider -->
+            <BoxView HeightRequest="1" BackgroundColor="#DDD"/>
+
+            <!-- Assignment List Preview -->
+            <Label Text="My Assignments" FontAttributes="Bold" FontSize="16"/>
+            <CollectionView x:Name="AssignmentList" HeightRequest="200">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout Padding="4" Spacing="10">
+                            <Label Text="{Binding Title}" FontAttributes="Bold" WidthRequest="180"/>
+                            <Label Text="{Binding Priority}" TextColor="#999"/>
+                            <Label Text="{Binding SubjectName}" TextColor="#4A90D9"/>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "778914533244",
+    "project_id": "studysync-ec973",
+    "storage_bucket": "studysync-ec973.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778914533244:android:6f7d2b086d21effa405ef9",
+        "android_client_info": {
+          "package_name": "com.alloiosis.studysync"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778914533244-t728g66336s9v0i332hce3aufgrllie2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alloiosis.studysync",
+            "certificate_hash": "f7e7d3ab6e234bc6cf01773f192a471bda05ad02"
+          }
+        },
+        {
+          "client_id": "778914533244-agb8ui96pel7uk5c6pkmvkt622871a8q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM6D4xdwIce1xFEfQuVYW6jINDkADpFOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778914533244-agb8ui96pel7uk5c6pkmvkt622871a8q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "778914533244-4f2e392l49l2i77o2nvhe5h7i8nfsrvb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.alloiosis.studysync"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

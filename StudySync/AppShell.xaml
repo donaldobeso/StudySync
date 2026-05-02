@@ -4,11 +4,63 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:StudySync"
-    Title="StudySync">
+    Title="StudySync"
+    Shell.BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+    Shell.ForegroundColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"
+    Shell.TitleColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}">
+
+    <!-- Login Shell Content (TabBar hidden) -->
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="login"
+        Shell.TabBarIsVisible="False"
+        Shell.NavBarIsVisible="False"/>
+
+    <!-- Register Shell Content (TabBar hidden) -->
+    <ShellContent
+        Title="Register"
+        ContentTemplate="{DataTemplate local:RegisterPage}"
+        Route="register"
+        Shell.TabBarIsVisible="False" 
+        Shell.NavBarIsVisible="False"/>
+
+    <!-- Tabbed navigation after login -->
+    <TabBar Route="mainTabs"
+            Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}" 
+            Shell.TabBarForegroundColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+            Shell.TabBarTitleColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}">
+        <ShellContent Title="Dashboard"
+                      Icon="home.png"
+                      ContentTemplate="{DataTemplate local:DashboardPage}"
+                      Route="dashboard" />
+
+        <ShellContent Title="Assignments"
+                      Icon="assignment.png"
+                      ContentTemplate="{DataTemplate local:AssignmentPage}"
+                      Route="assignment" />
+
+        <ShellContent Title="Subjects"
+                      Icon="bookmark.png"
+                      ContentTemplate="{DataTemplate local:SubjectsPage}"
+                      Route="subjects" />
+        
+        <ShellContent Title="Schedule"
+              Icon="schedule.png"
+              ContentTemplate="{DataTemplate local:SchedulePage}"
+              Route="schedule"/>
+
+        <ShellContent Title="Settings"
+                      Icon="settings.png"
+                      ContentTemplate="{DataTemplate local:SettingsPage}"
+                      Route="settings" />
+    </TabBar>
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Add Subject"
+        ContentTemplate="{DataTemplate local:AddSubjectPage}"
+        Route="addsubject"
+        Shell.TabBarIsVisible="False"
+        Shell.NavBarIsVisible="False"/>
 
 </Shell>

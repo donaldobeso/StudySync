@@ -1,12 +1,13 @@
-﻿// Services/IAssignmentService.cs
-using StudySync.Shared.Models;
+﻿using StudySync.Shared.Models;
 
 namespace StudySync.Shared.Services
 {
     public interface IAssignmentService
     {
-        List<Assignment> GetAssignments();
-        void AddAssignment(Assignment assignment);
-        void MarkComplete(int id);
+        Task<List<Assignment>> GetAssignmentsAsync(string userUid);
+        Task AddAssignmentAsync(Assignment assignment, string userUid);
+        Task MarkCompleteAsync(string firestoreId, string userUid);
+        Task DeleteAssignmentAsync(string firestoreId, string userUid);
+        Task UpdateAssignmentAsync(Assignment assignment, string userUid);
     }
 }

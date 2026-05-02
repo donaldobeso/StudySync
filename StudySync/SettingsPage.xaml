@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:StudySync.ViewModels"
+             x:Class="StudySync.SettingsPage"
+             Title="Settings"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColor}}">
+
+    
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20" VerticalOptions="Start">
+
+            <!-- Header -->
+            <Label Text="⚙️ Settings"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+            <!-- Theme Settings Card -->
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                    StrokeThickness="1"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                    Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Appearance"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <Label Grid.Column="0"
+                               Text="Dark Theme"
+                               FontSize="16"
+                               TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"
+                               VerticalOptions="Center"/>
+
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding IsDarkTheme}"
+                                OnColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                                ThumbColor="{StaticResource White}"
+                                HorizontalOptions="End"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Profile Card -->
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                    StrokeThickness="1"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                    Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Profile"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <Label Grid.Column="0"
+                               Text="Full Name"
+                               FontSize="16"
+                               TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"
+                               VerticalOptions="Center"/>
+                        <Button Grid.Column="1"
+                                Text="Edit"
+                                Command="{Binding EditFullNameCommand}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                                TextColor="{StaticResource White}"
+                                FontSize="14"
+                                Padding="12,6"
+                                CornerRadius="6"
+                                HorizontalOptions="End"
+                                IsEnabled="{Binding IsNotLoading}"/>
+                    </Grid>
+
+                    <Label Text="{Binding UserFullName}"
+                           FontSize="16"
+                           TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"
+                           Margin="0,0,0,8"/>
+
+                    <Label Text="Email"
+                           FontSize="16"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"
+                           Margin="0,8,0,0"/>
+
+                    <Label Text="{Binding UserEmail}"
+                           FontSize="16"
+                           TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Notifications Card -->
+            <Border StrokeShape="RoundRectangle 12"
+        Stroke="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+        StrokeThickness="1"
+        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+        Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Notifications"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Label Text="Assignment &amp; Subject Reminders"
+                       FontSize="16"
+                       TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"
+                       VerticalOptions="Center"/>
+                            <Label Text="Get notified before assignment deadlines and on class days."
+                       FontSize="12"
+                       TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"/>
+                        </VerticalStackLayout>
+
+                        <Switch Grid.Column="1"
+                    IsToggled="{Binding NotificationsEnabled}"
+                    OnColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                    ThumbColor="{StaticResource White}"
+                    HorizontalOptions="End"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Account Actions Card -->
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                    StrokeThickness="1"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                    Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Account"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+                    <Button Text="🚪 Logout"
+                            Command="{Binding LogoutCommand}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                            TextColor="{StaticResource White}"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            Padding="20,12"
+                            CornerRadius="8"
+                            IsEnabled="{Binding IsNotLoading}"/>
+
+                    <!-- Loading Indicator -->
+                    <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                       IsVisible="{Binding IsLoading}"
+                                       Color="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                                       HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- App Info -->
+            <VerticalStackLayout Spacing="8" Padding="20,0">
+                <Label Text="StudySync"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                       HorizontalOptions="Center"/>
+                <Label Text="Version 1.0"
+                       FontSize="14"
+                       TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StudySync.AddSubjectPage"
+             Title="Add Subject"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColor}}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <!-- Header -->
+            <Label Text="📚 Add New Subject"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"/>
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   FontSize="14"
+                   TextColor="#C62828"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}"/>
+
+            <!-- Subject Name -->
+            <Label Text="Subject Name" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Entry x:Name="NameEntry"
+                   Placeholder="e.g., Mathematics"
+                   Text="{Binding Name}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+            <!-- Instructor -->
+            <Label Text="Instructor" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Entry x:Name="InstructorEntry"
+                   Placeholder="e.g., Dr. John Smith"
+                   Text="{Binding Instructor}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+            <!-- Room -->
+            <Label Text="Room" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Entry x:Name="RoomEntry"
+                   Placeholder="e.g., A101"
+                   Text="{Binding Room}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+            <!-- Class Days -->
+            <Label Text="Class Days" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <CollectionView ItemsSource="{Binding AvailableDays}"
+                            SelectionMode="Multiple"
+                            SelectedItems="{Binding SelectedDays, Mode=TwoWay}"
+                            HeightRequest="56"
+                            Margin="0,4">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="8" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border x:Name="dayBorder"
+                                Padding="12,8"
+                                StrokeShape="RoundRectangle 20"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                                Stroke="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"
+                                StrokeThickness="1">
+                            <Label Text="{Binding .}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter TargetName="dayBorder" Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}" />
+                                            <Setter TargetName="dayBorder" Property="StrokeThickness" Value="1" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter TargetName="dayBorder" Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}" />
+                                            <Setter TargetName="dayBorder" Property="StrokeThickness" Value="0" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Class Time -->
+            <Label Text="Class Time" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="8">
+                <TimePicker x:Name="StartTimePicker"
+                            Time="{Binding StartTime, Mode=TwoWay}"
+                            Format="HH:mm"
+                            TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                            HorizontalOptions="Fill"/>
+                <Label Grid.Column="1" 
+                       Text="to" 
+                       VerticalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"/>
+                <TimePicker x:Name="EndTimePicker"
+                            Grid.Column="2"
+                            Time="{Binding EndTime, Mode=TwoWay}"
+                            Format="HH:mm"
+                            TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                            HorizontalOptions="Fill"/>
+            </Grid>
+
+            <!-- Color Picker (swatches) -->
+            <Label Text="Color" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <CollectionView ItemsSource="{Binding Colors}"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedColor, Mode=TwoWay}"
+                HeightRequest="72"
+                Margin="12,0">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border x:Name="swatchBorder"
+                    WidthRequest="56"
+                    HeightRequest="56"
+                    StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{Binding .}"
+                    StrokeThickness="0">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter TargetName="swatchBorder" Property="StrokeThickness" Value="0" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter TargetName="swatchBorder" Property="StrokeThickness" Value="3" />
+                                            <Setter TargetName="swatchBorder" Property="Stroke" Value="#222" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Color Preview -->
+            <BoxView HeightRequest="40"
+         BackgroundColor="{Binding SelectedColor}"
+         CornerRadius="8"/>
+
+            <!-- Save Button -->
+            <Button Text="Save Subject"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                    TextColor="{StaticResource White}"
+                    CornerRadius="10"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                    Clicked="OnSaveClicked"/>
+
+            <!-- Cancel Button -->
+            <Button Text="Cancel"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"
+                    TextColor="{StaticResource White}"
+                    CornerRadius="10"
+                    Clicked="OnCancelClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

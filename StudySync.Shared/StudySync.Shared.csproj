@@ -6,4 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Plugin.Firebase.Core" Version="4.2.0" />
+    <PackageReference Include="Plugin.Firebase.Firestore" Version="4.0.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="3.0.2" />
+  </ItemGroup>
+
 </Project>

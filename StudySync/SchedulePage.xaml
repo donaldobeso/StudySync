@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StudySync.SchedulePage"
+             Title="Smart Scheduler"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColor}}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <!-- Header -->
+            <Label Text="🧠 Smart Study Scheduler"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"/>
+
+            <Label Text="Generate an optimized daily or weekly plan based on your subjects, assignments, and priorities."
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"/>
+
+            <!-- Buttons -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Text="📅 Daily Plan"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                        TextColor="White"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        Padding="12,14"
+                        IsEnabled="{Binding IsNotLoading}"
+                        Clicked="OnDailyClicked"/>
+
+                <Button Grid.Column="1"
+                        Text="🗓️ Weekly Plan"
+                        BackgroundColor="#9D84B7"
+                        TextColor="White"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        Padding="12,14"
+                        IsEnabled="{Binding IsNotLoading}"
+                        Clicked="OnWeeklyClicked"/>
+            </Grid>
+
+            <!-- Legend -->
+            <ScrollView Orientation="Horizontal">
+                <HorizontalStackLayout Spacing="12">
+                    <Border BackgroundColor="#FF9FF3" StrokeShape="RoundRectangle 6" Padding="8,4">
+                        <Label Text="🍽️ Meal" FontSize="11" TextColor="White"/>
+                    </Border>
+                    <Border BackgroundColor="#4A90D9" StrokeShape="RoundRectangle 6" Padding="8,4">
+                        <Label Text="🏫 Class" FontSize="11" TextColor="White"/>
+                    </Border>
+                    <Border BackgroundColor="#FF6B6B" StrokeShape="RoundRectangle 6" Padding="8,4">
+                        <Label Text="📝 Assignment" FontSize="11" TextColor="White"/>
+                    </Border>
+                    <Border BackgroundColor="#9D84B7" StrokeShape="RoundRectangle 6" Padding="8,4">
+                        <Label Text="📖 Study" FontSize="11" TextColor="White"/>
+                    </Border>
+                    <Border BackgroundColor="#00B4D8" StrokeShape="RoundRectangle 6" Padding="8,4">
+                        <Label Text="🎮 Free Time" FontSize="11" TextColor="White"/>
+                    </Border>
+                    <Border BackgroundColor="#51CF66" StrokeShape="RoundRectangle 6" Padding="8,4">
+                        <Label Text="☕ Break" FontSize="11" TextColor="White"/>
+                    </Border>
+                </HorizontalStackLayout>
+            </ScrollView>
+
+            <!-- Loading -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               Color="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                               HorizontalOptions="Center"/>
+
+            <!-- Status Message -->
+            <Label Text="{Binding StatusMessage}"
+                   FontSize="16"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"
+                   IsVisible="{Binding HasStatus}"/>
+
+            <!-- Daily Schedule -->
+            <VerticalStackLayout IsVisible="{Binding ShowDaily}" Spacing="8">
+                <Label Text="📅 Today's Schedule"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+                <CollectionView ItemsSource="{Binding DailySchedule}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Margin="0,0,0,8">
+                                <!-- Color bar -->
+                                <Border Grid.Column="0"
+                                        BackgroundColor="{Binding BackgroundColor}"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="8,6"
+                                        WidthRequest="80"
+                                        VerticalOptions="Start">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="{Binding Icon}" FontSize="16" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding TimeSlot}"
+                                               FontSize="9"
+                                               FontAttributes="Bold"
+                                               TextColor="White"
+                                               HorizontalOptions="Center"/>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- Content -->
+                                <Border Grid.Column="1"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="12,8">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="{Binding Title}"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+                                        <Label Text="{Binding Description}"
+                                               FontSize="12"
+                                               TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+            <!-- Weekly Schedule -->
+            <VerticalStackLayout IsVisible="{Binding ShowWeekly}" Spacing="16">
+                <Label Text="🗓️ This Week's Schedule"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+                <CollectionView ItemsSource="{Binding WeeklySchedule}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border StrokeShape="RoundRectangle 10"
+                                    StrokeThickness="1"
+                                    Stroke="{AppThemeBinding Light={StaticResource BorderColorLight}, Dark={StaticResource BorderColor}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                                    Padding="16"
+                                    Margin="0,0,0,12">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="{Binding DayLabel}"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"/>
+
+                                    <CollectionView ItemsSource="{Binding Items}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" Margin="0,4,0,0">
+                                                    <Border Grid.Column="0"
+                                                            BackgroundColor="{Binding BackgroundColor}"
+                                                            StrokeShape="RoundRectangle 6"
+                                                            Padding="6,3"
+                                                            VerticalOptions="Start">
+                                                        <VerticalStackLayout Spacing="1">
+                                                            <Label Text="{Binding Icon}" FontSize="12" HorizontalOptions="Center"/>
+                                                            <Label Text="{Binding TimeSlot}"
+                                                                   FontSize="9"
+                                                                   TextColor="White"
+                                                                   HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                    </Border>
+                                                    <VerticalStackLayout Grid.Column="1" Spacing="1">
+                                                        <Label Text="{Binding Title}"
+                                                               FontSize="13"
+                                                               FontAttributes="Bold"
+                                                               TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+                                                        <Label Text="{Binding Description}"
+                                                               FontSize="11"
+                                                               TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"/>
+                                                    </VerticalStackLayout>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

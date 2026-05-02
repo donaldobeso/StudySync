@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StudySync.AddAssignmentPage"
+             Title="Add Assignment"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColor}}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <Label Text="📝 Add New Assignment"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"/>
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   FontSize="14"
+                   TextColor="#C62828"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}"/>
+
+            <!-- Title -->
+            <Label Text="Assignment Title" FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Entry Placeholder="e.g., Math Homework Chapter 5"
+                   Text="{Binding Title}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+            <!-- Description -->
+            <Label Text="Description (optional)" FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Editor Placeholder="e.g., Read chapters 5-7 and answer review questions"
+                    Text="{Binding Description}"
+                    HeightRequest="80"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                    TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+            <!-- Subject -->
+            <Label Text="Subject" FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Entry Placeholder="e.g., Mathematics"
+                   Text="{Binding SubjectName}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+            <!-- Priority -->
+            <Label Text="Priority" FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Picker Title="Select Priority"
+                    ItemsSource="{Binding PriorityOptions}"
+                    SelectedItem="{Binding SelectedPriority}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+                    TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+
+            <!-- Estimated Time -->
+            <Label Text="Estimated Time to Complete" FontAttributes="Bold"
+       TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Label Text="Hours" FontSize="13"
+       TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"/>
+            <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="8">
+                <Picker ItemsSource="{Binding HourOptions}"
+            SelectedItem="{Binding SelectedHours, Mode=TwoWay}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+            TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+                <Label Grid.Column="1" Text="hr" VerticalOptions="Center"
+           TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"/>
+                <Picker Grid.Column="2"
+            ItemsSource="{Binding MinuteOptions}"
+            SelectedItem="{Binding SelectedMinutes, Mode=TwoWay}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"
+            TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            </Grid>
+            <Label Text="{Binding EstimatedTimePreview}"
+       FontSize="13"
+       HorizontalOptions="Center"
+       TextColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"/>
+
+            <!-- Due Date -->
+            <Label Text="Due Date" FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"/>
+            <DatePicker Date="{Binding DueDate}"
+                        Format="MMMM dd, yyyy"
+                        TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight}, Dark={StaticResource PrimaryTextColor}}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight}, Dark={StaticResource SurfaceColor}}"/>
+
+            <!-- Save Button -->
+            <Button Text="Save Assignment"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColor}}"
+                    TextColor="{StaticResource White}"
+                    CornerRadius="10"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                    Clicked="OnSaveClicked"/>
+
+            <!-- Cancel Button -->
+            <Button Text="Cancel"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColor}}"
+                    TextColor="{StaticResource White}"
+                    CornerRadius="10"
+                    Clicked="OnCancelClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
